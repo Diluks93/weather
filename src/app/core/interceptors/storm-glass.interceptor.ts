@@ -3,22 +3,25 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable()
-export class OpenWeatherInterceptor implements HttpInterceptor {
-  private apiUrl = environment.apiUrlOW;
-  private apiKey = environment.apiKeyOW;
+export class StormGlassInterceptor implements HttpInterceptor {
+  private apiUrl = environment.apiUrlSG;
+  private apiKey = environment.apiKeySG;
 
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('lon')) {
-      const req = request.clone({ url: `${this.apiUrl}/${request.url}&appid=${this.apiKey}&units=metric`} );
-      console.log(req);
+    if (request.url.includes('lng')) {
+      const headers = new HttpHeaders({
+        'Authorization': `${this.apiKey}`,
+      });
+      const req = request.clone({ url: `${this.apiUrl}/${request.url}&params=waveHeight,airTemperature`, headers });
       return next.handle(req);
     }
 
