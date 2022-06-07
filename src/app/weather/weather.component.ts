@@ -13,13 +13,15 @@ export class WeatherComponent implements OnInit {
 
   constructor(private weatherService: WeatherService, private geolocation: GeolocationService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    //this.getWetherByCoord();
+  }
 
   private getWetherByCoord(): void {
     this.geolocation.getLocation()
       .then(resp => {
         this.weatherService.getWeatherByIP(resp).subscribe(resp => {
-          console.log(resp);
+          this.city = resp.name;
         });
       })
       .catch(err => {

@@ -2,16 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { WeatherComponent } from './weather.component';
+import { ClockComponent } from './components/clock/clock.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
 
 @NgModule({
   declarations: [
-    WeatherComponent
+    WeatherComponent,
+    ClockComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     WeatherComponent
