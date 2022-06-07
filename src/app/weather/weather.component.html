@@ -4,9 +4,9 @@
     <form class="form">
       <mat-form-field class="" appearance="standard">
         <mat-label>City</mat-label>
-        <input matInput placeholder="city" value={{city}}>
+        <input matInput placeholder="city" value={{dataWeather.city}} #valueCity>
       </mat-form-field>
     </form>
   </div>
-  
+  <app-widget [icon]="dataWeather.icon" [temp]="dataWeather.temp"></app-widget>
 </main>

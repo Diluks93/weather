@@ -3,13 +3,19 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url('https://images.unsplash.com/photo-1567157398024-75a5a0aa0831?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwyNjk3NTN8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTQ1Nzk3NzY&ixlib=rb-1.2.1&q=80")') 100% 100% no-repeat;
+  background-size: cover;
 }
 
 .main {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 80vh;
   width: 80vw;
   box-shadow: 6px 6px 2px 1px rgba(2, 2, 40, 0.2);
+  background: url('https://images.unsplash.com/photo-1540607767566-ef1fd31025f4?crop=entropy&cs=tinysrgb&fm=jpg&ixid=MnwyNjk3NTN8MHwxfHJhbmRvbXx8fHx8fHx8fDE2NTQ1OTMzNDA&ixlib=rb-1.2.1&q=80') center center no-repeat;
+  background-size: cover;
   .wrapper {
     display: flex;
     height: 20%;

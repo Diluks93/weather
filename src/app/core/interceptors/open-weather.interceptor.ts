@@ -16,7 +16,7 @@ export class OpenWeatherInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('lon')) {
+    if (request.url.includes('lon') || request.url.startsWith('?q=')) {
       const req = request.clone({ url: `${this.apiUrl}/${request.url}&appid=${this.apiKey}&units=metric`} );
 
       return next.handle(req);

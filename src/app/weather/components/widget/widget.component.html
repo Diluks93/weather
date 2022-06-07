@@ -1,0 +1,16 @@
+<div class="flex">
+  <div class="current">
+    <app-img [icon]="icon" class="img"></app-img>
+    <div class="wrapper">
+      <span class="day">Today</span>
+      <p class="temp">{{temp}} °C</p>
+    </div>
+  </div>
+  <div class="forecast">
+    <div class="wrapper" *ngFor="let day of weekDays; index as i">
+      <span class="day">{{day}}</span>
+      <app-img [icon]="icon" class="img"></app-img>
+      <p class="temp"> °C</p>
+    </div>
+  </div>
+</div>
