@@ -11,8 +11,7 @@ import { AppComponent } from './app.component';
 import { WeatherModule } from './weather/weather.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-import { reducers, metaReducers } from './store/reducers';
-import { environment } from '../environments/environment';
+import { weatherReducer } from './store/reducers/weather.reducer';
 
 @NgModule({
   declarations: [
@@ -25,8 +24,17 @@ import { environment } from '../environments/environment';
     SharedModule,
     CoreModule,
     WeatherModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forRoot({ weather: weatherReducer },
+      {
+        runtimeChecks: {
+          strictActionImmutability: true,
+          strictStateImmutability: true,
+          strictStateSerializability: true,
+          strictActionSerializability: true,
+          strictActionWithinNgZone: true,
+          strictActionTypeUniqueness: true,
+      }
+  }),
     EffectsModule.forRoot([]),
   ],
   providers: [],

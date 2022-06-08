@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { coord, OpenWeatherRequest } from '../models/open-weather-request.models';
+import { StormGlassModel } from '../models/storm-glass-request.models';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class WeatherService {
     return this.http.get<OpenWeatherRequest>(`?lat=${lat}&lon=${lon}`)
   }
 
-  public getWeatherByCoord({ lat, lon }: coord): Observable<object> {
-    return this.http.get(`?lat=${lat}&lng=${lon}`)
+  public getWeatherByCoord({ lat, lon }: coord): Observable<StormGlassModel> {
+    return this.http.get<StormGlassModel>(`?lat=${lat}&lng=${lon}`)
+  }
+
+  public getPictureUrl(query: string): Observable<string> {
+    return this.http.get<string>(`&query=${query}`)
   }
 }

@@ -19,12 +19,12 @@ export type coord = Readonly<{
   lat: number;
 }>;
 
-type weather = Readonly<{
+export type weather = {
   id: number;
-  main: string;
+  main: 'Thunderstorm' | 'Drizzle' | 'Rain' | 'Snow' | 'Clear' | 'Clouds' | 'Atmosphere' | 'Unknown';
   description: string;
   icon: string;
-}>;
+};
 
 type main = Readonly<{
   temp: number;

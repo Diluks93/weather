@@ -1,12 +1,19 @@
-<main class="main">
-  <div class="wrapper">
-    <app-clock class="clock"></app-clock>
-    <form class="form">
-      <mat-form-field class="" appearance="standard">
-        <mat-label>City</mat-label>
-        <input matInput placeholder="city" value={{dataWeather.city}} #valueCity>
-      </mat-form-field>
-    </form>
-  </div>
-  <app-widget [icon]="dataWeather.icon" [temp]="dataWeather.temp"></app-widget>
-</main>
+<ng-container *ngIf="dataWeathers$ | async as dataWeathers">
+  <main [appMainBackground]="dataWeathers.type" class="main">
+    <div class="wrapper">
+      <app-clock class="clock"></app-clock>
+      <form class="form">
+        <mat-form-field appearance="standard">
+          <mat-label>City</mat-label>
+          <input matInput placeholder="city" value={{dataWeathers.city}} #valueCity>
+        </mat-form-field>
+      </form>
+    </div>
+    <app-widget
+      [type]="dataWeathers.type"
+      [appBackground]="dataWeathers.type"
+      [icon]="dataWeathers.icon"
+      [temp]="dataWeathers.temp"
+      [coord]="dataWeathers.coord"></app-widget>
+  </main>
+</ng-container>

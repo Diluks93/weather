@@ -21,7 +21,7 @@ export class StormGlassInterceptor implements HttpInterceptor {
       const headers = new HttpHeaders({
         'Authorization': `${this.apiKey}`,
       });
-      const req = request.clone({ url: `${this.apiUrl}/${request.url}&params=waveHeight,airTemperature`, headers });
+      const req = request.clone({ url: `${this.apiUrl}${request.url}&params=waveHeight,airTemperature100m`, headers });
       return next.handle(req);
     }
 
