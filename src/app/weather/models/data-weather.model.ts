@@ -7,3 +7,8 @@ export interface DataWeather {
   type: string;
   coord: coord;
 }
+
+export type dataWeek = {
+  day: string;
+  temp: number;
+}

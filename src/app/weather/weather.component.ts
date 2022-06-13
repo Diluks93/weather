@@ -1,12 +1,13 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
+
+import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, tap } from 'rxjs';
 
 import { OpenWeatherRequest } from './models/open-weather-request.models';
 import { GeolocationService } from './services/geolocation.service';
 import { WeatherService } from './services/weather.service';
 import { DataWeather } from './models/data-weather.model';
-import { debounceTime, distinctUntilChanged, filter, fromEvent, map, Observable, tap } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { getLastWeather, selectWeather } from '../store/selectors/weather.selectors';
+import { getLastWeather } from '../store/selectors/weather.selectors';
 import { retrieveWeather } from '../store/actions/weather.actions';
 
 @Component({
@@ -18,7 +19,7 @@ import { retrieveWeather } from '../store/actions/weather.actions';
 export class WeatherComponent implements OnInit, AfterViewInit {
   @ViewChild('valueCity')
   public inputElement?: ElementRef;
-  public dataWeathers$?: Observable<DataWeather> | undefined;
+  public dataWeathers$?: Observable<DataWeather>;
 
   constructor(private weatherService: WeatherService, private geolocation: GeolocationService, private store: Store) { }
 

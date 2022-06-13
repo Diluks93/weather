@@ -12,6 +12,7 @@ import { WeatherModule } from './weather/weather.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { weatherReducer } from './store/reducers/weather.reducer';
+import { weekReducer } from './store/reducers/week.reducer';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,11 @@ import { weatherReducer } from './store/reducers/weather.reducer';
     SharedModule,
     CoreModule,
     WeatherModule,
-    StoreModule.forRoot({ weather: weatherReducer },
+    StoreModule.forRoot(
+      {
+        weather: weatherReducer,
+        dataWeek: weekReducer
+      },
       {
         runtimeChecks: {
           strictActionImmutability: true,

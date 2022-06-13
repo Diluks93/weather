@@ -1,47 +1,64 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
-import { coord } from '../../models/open-weather-request.models';
-import { WeatherService } from '../../services/weather.service';
-import { Observable, of, Subject, map } from 'rxjs';
-import { StormGlassModel } from '../../models/storm-glass-request.models';
+import { Observable, map, tap } from 'rxjs';
 
-type dataWeek = {
-  day: string;
-  temp: number;
-}
+import { coord } from '../../models/open-weather-request.models';
+import { dataWeek } from '../../models/data-weather.model';
+import { WeatherService } from '../../services/weather.service';
+import { StormGlassModel } from '../../models/storm-glass-request.models';
+import { Store } from '@ngrx/store';
+import { retrieveDataWeek } from 'src/app/store/actions/week.actions';
+import { getDataWeek } from 'src/app/store/selectors/week.selectors';
+
 
 @Component({
   selector: 'app-widget',
   templateUrl: './widget.component.html',
   styleUrls: ['./widget.component.scss'],
 })
-export class WidgetComponent /* implements OnInit */ {
+export class WidgetComponent implements OnChanges {
   @Input() public icon: string = '';
   @Input() public temp: number | null = null;
   @Input() public type?: string;
   @Input() public coord?: coord;
-  public weekdays$?: Observable<dataWeek[]>;
+  public weekdays$?: Observable<Readonly<dataWeek>[]>;
 
 
-  constructor(private weatherService: WeatherService, private datePipe: DatePipe) { }
+  constructor(private weatherService: WeatherService, private datePipe: DatePipe, private store: Store) { }
 
   ngOnChanges(): void {
     this.getWetherByCoord();
+    this.weekdays$ = this.store.select(getDataWeek).pipe(
+      tap((dataWeek) => {
+        console.log(dataWeek);
+      }))
   }
 
 
   private getWetherByCoord() {
-    this.weekdays$ = this.weatherService.getWeatherByCoord(this.coord as coord).pipe(
-      map((resp: StormGlassModel) => {
-        const array = []
-        for(let i = 37; array.length < 6; i += 24) {
-          array.push({
-            day: this.datePipe.transform(resp.hours[i].time, 'EEE') as string,
-            temp: resp.hours[i].airTemperature100m.noaa
-          })
-        }
-        return array;
-      }));
-    }
+    // this.weekdays$ = this.weatherService.getWeatherByCoord(this.coord as coord).pipe(
+    //   map((resp: StormGlassModel) => {
+    //     const array = []
+    //     for(let i = 37; array.length < 6; i += 24) {
+    //       array.push({
+    //         day: this.datePipe.transform(resp.hours[i].time, 'EEE') as string,
+    //         temp: resp.hours[i].airTemperature100m.noaa
+    //       })
+    //     }
+    //     return array;
+    //   }));
+
+    this.weatherService.getWeatherByCoord(this.coord as coord).subscribe(resp => {
+      console.log(resp)
+      const array = []
+      for(let i = 37; array.length < 6; i += 24) {
+        array.push({
+          day: this.datePipe.transform(resp.hours[i].time, 'EEE') as string,
+          temp: Math.round(resp.hours[i].airTemperature100m.noaa)
+        })
+      }
+      this.store.dispatch(retrieveDataWeek({ dataWeek: array }));
+    });
+  }
 }

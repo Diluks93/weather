@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
-import { DataWeather } from 'src/app/weather/models/data-weather.model';
 
+import { DataWeather } from 'src/app/weather/models/data-weather.model';
 import { retrieveWeather, addWeather } from '../actions/weather.actions';
 
 export const initialState: ReadonlyArray<DataWeather> = [];
