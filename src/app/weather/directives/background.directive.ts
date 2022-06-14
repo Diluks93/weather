@@ -1,9 +1,9 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: '[appBackground]',
 })
-export class BackgroundDirective /* implements OnInit */ {
+export class BackgroundDirective {
   @Input('appBackground')
   public typeWeather?: string;
 

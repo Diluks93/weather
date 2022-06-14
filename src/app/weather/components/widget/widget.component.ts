@@ -1,13 +1,12 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
 
-import { Observable, map, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { coord } from '../../models/open-weather-request.models';
 import { dataWeek } from '../../models/data-weather.model';
 import { WeatherService } from '../../services/weather.service';
-import { StormGlassModel } from '../../models/storm-glass-request.models';
-import { Store } from '@ngrx/store';
 import { retrieveDataWeek } from 'src/app/store/actions/week.actions';
 import { getDataWeek } from 'src/app/store/selectors/week.selectors';
 
@@ -29,28 +28,12 @@ export class WidgetComponent implements OnChanges {
 
   ngOnChanges(): void {
     this.getWetherByCoord();
-    this.weekdays$ = this.store.select(getDataWeek).pipe(
-      tap((dataWeek) => {
-        console.log(dataWeek);
-      }))
+    this.weekdays$ = this.store.select(getDataWeek);
   }
 
 
   private getWetherByCoord() {
-    // this.weekdays$ = this.weatherService.getWeatherByCoord(this.coord as coord).pipe(
-    //   map((resp: StormGlassModel) => {
-    //     const array = []
-    //     for(let i = 37; array.length < 6; i += 24) {
-    //       array.push({
-    //         day: this.datePipe.transform(resp.hours[i].time, 'EEE') as string,
-    //         temp: resp.hours[i].airTemperature100m.noaa
-    //       })
-    //     }
-    //     return array;
-    //   }));
-
     this.weatherService.getWeatherByCoord(this.coord as coord).subscribe(resp => {
-      console.log(resp)
       const array = []
       for(let i = 37; array.length < 6; i += 24) {
         array.push({

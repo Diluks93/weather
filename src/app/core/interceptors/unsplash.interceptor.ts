@@ -8,7 +8,6 @@ import {
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-// const REQUEST = 'https://api.unsplash.com/photos/random?orientation=landscape&query=${timeOfDay}&client_id=ZbU_eUZ1Awpdf0cKgjD_1ZsZ72zRBfUTlkW516emWag'
 
 @Injectable()
 export class UnsplashInterceptor implements HttpInterceptor {

@@ -51,4 +51,3 @@ type sys = Readonly<{
   sunrise: number;
   sunset: number;
 }>;
-

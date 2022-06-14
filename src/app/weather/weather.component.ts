@@ -25,28 +25,20 @@ export class WeatherComponent implements OnInit, AfterViewInit {
 
   public ngOnInit(): void {
     this.getWetherByCoord();
-    this.dataWeathers$ = this.store.select(getLastWeather).pipe(
-      tap((weather: DataWeather) => {
-        console.log(weather);
-      }
-      ));
+    this.dataWeathers$ = this.store.select(getLastWeather)
   }
 
   public ngAfterViewInit(): void {
     setTimeout(() => {
-    const input$ = fromEvent(this.inputElement?.nativeElement, 'keyup').pipe(
-      map(((event: unknown) => ((event as KeyboardEvent).target as HTMLInputElement).value)),
-      filter((value: string) => value.length > 3),
-      debounceTime(500),
-      distinctUntilChanged(),
-      tap((value: string) => this.getWetherByCity(value))
-    );
-    input$.subscribe();
-    this.dataWeathers$ = this.store.select(getLastWeather).pipe(
-      tap((weather: DataWeather) => {
-        console.log(weather);
-      }
-      ));
+      const input$ = fromEvent(this.inputElement?.nativeElement, 'keyup').pipe(
+        map(((event: unknown) => ((event as KeyboardEvent).target as HTMLInputElement).value)),
+        filter((value: string) => value.length > 3),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((value: string) => this.getWetherByCity(value))
+      );
+      input$.subscribe();
+      this.dataWeathers$ = this.store.select(getLastWeather)
     }, 1000);
   }
 
